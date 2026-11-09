@@ -1,0 +1,22 @@
+HƯỚNG DẪN TRIỂN KHAI GIÁM SÁT HỌC SINH TRÊN NETLIFY
+
+Gói này giữ nguyên website và bổ sung nhật ký máy chủ.
+
+1) Giải nén ZIP.
+2) Trong Netlify, mở đúng site đang chạy website.
+3) Vào Site configuration / Environment variables (hoặc Project configuration / Environment variables).
+4) Tạo biến:
+   TEACHER_MONITOR_PASSWORD = mật khẩu riêng của giáo viên (tự đặt, không dùng mật khẩu cá nhân).
+5) Deploy lại toàn bộ thư mục đã giải nén (không chỉ upload riêng index.html).
+   Có thể kéo thả thư mục lên Netlify Drop hoặc kết nối Git repository.
+6) Sau khi deploy xong, mở website, nhập họ tên/lớp/ngày sinh như bình thường.
+7) Nút “Quản lý giáo viên” nằm góc dưới bên trái. Nhập mật khẩu ở bước 4 để xem nhật ký.
+
+LƯU Ý QUAN TRỌNG
+- Cần deploy dưới dạng Netlify site có hỗ trợ Netlify Functions và Netlify Blobs; Netlify Blobs được cấp cho site sau khi deploy.
+- Mỗi lần học sinh tải lại trang sẽ được ghi nhận là “page_reload”; chuyển tab/ẩn trang ghi “tab_hidden”; quay lại ghi “tab_returned”.
+- Nhật ký được lưu ở máy chủ, không mất chỉ vì học sinh tải lại trang hoặc xóa sessionStorage.
+- Đây là công cụ ghi nhận dấu hiệu, không phải hệ thống chống gian lận tuyệt đối. Trình duyệt có thể không gửi được sự kiện cuối nếu mất điện/mất mạng/đóng đột ngột. Heartbeat giúp phát hiện phiên ngừng hoạt động nhưng không chứng minh nguyên nhân.
+- Họ tên/lớp do học sinh tự nhập nên có thể khai sai hoặc giả mạo. Muốn xác thực danh tính chặt chẽ cần mã học sinh/tài khoản riêng do giáo viên cấp.
+- Không thu thập ngày sinh lên máy chủ; chỉ lưu tên, lớp, mã phiên và sự kiện.
+- Chỉ giáo viên biết mật khẩu TEACHER_MONITOR_PASSWORD mới xem được bảng nhật ký. Không đặt mật khẩu trong HTML.
